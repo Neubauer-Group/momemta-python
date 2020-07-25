@@ -56,7 +56,7 @@ RUN mkdir -p /code && \
     cd build && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local \
-      -DTESTS=ON \
+      -DTESTS=OFF \
       -DEXAMPLES=OFF \
       -DCMAKE_CXX_STANDARD=17 \
       -DPYTHON_BINDINGS=ON \
