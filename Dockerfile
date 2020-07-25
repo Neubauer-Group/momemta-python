@@ -28,6 +28,7 @@ RUN apt-get -qq -y update && \
 
 # Install LHAPDF
 ARG LHAPDF_VERSION=6.2.3
+# hadolint ignore=SC2155
 RUN mkdir -p /code && \
     cd /code && \
     wget https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
