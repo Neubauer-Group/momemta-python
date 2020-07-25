@@ -9,7 +9,7 @@ WORKDIR /usr/local
 SHELL [ "/bin/bash", "-c" ]
 
 RUN apt-get -qq -y update && \
-    apt-get -qq -y install \
+    apt-get -qq -y --no-install-recommends install \
       gcc \
       g++ \
       gfortran \
