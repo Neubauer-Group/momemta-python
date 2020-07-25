@@ -21,6 +21,7 @@ RUN apt-get -qq -y update && \
       zlib1g-dev \
       libbz2-dev \
       rsync \
+      git \
       bash-completion \
       wget && \
     apt-get -y autoclean && \
@@ -42,6 +43,27 @@ RUN mkdir -p /code && \
     make -j$(($(nproc) - 1)) && \
     make install && \
     rm -rf /code
+
+# Install MoMEMta
+ARG MOMEMTA_VERSION=v1.0.0
+RUN mkdir -p /code && \
+    cd /code && \
+    git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
+      --branch "${MOMEMTA_VERSION}" \
+      --single-branch && \
+    cd MoMEMta/ && \
+    mkdir build && \
+    cd build && \
+    cmake \
+      -DCMAKE_INSTALL_PREFIX=/usr/local \
+      -DTESTS=OFF \
+      -DEXAMPLES=OFF \
+      -DPYTHON_BINDINGS=ON \
+      -DPYTHON_MIN_VERSION=3 \
+      -DBoost_PYTHON_VERSION_TAG=3 \
+      .. && \
+    cmake --build . -- -j$(($(nproc) - 1)) && \
+    cmake --build . --target install
 
 ## Install PYTHIA
 #ARG PYTHIA_VERSION=8301
