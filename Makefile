@@ -10,7 +10,7 @@ image:
 	-t matthewfeickert/momemta-python:2.7.2
 	--compress .
 
-image:
+debug:
 	docker build . \
 	-f Dockerfile \
 	--build-arg LHAPDF_VERSION=6.2.3 \
