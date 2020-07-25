@@ -14,6 +14,8 @@ RUN apt-get -qq -y update && \
       g++ \
       gfortran \
       make \
+      cmake \
+      libboost-all-dev \
       vim \
       zlibc \
       zlib1g-dev \
@@ -27,7 +29,7 @@ RUN apt-get -qq -y update && \
 
 # Install LHAPDF
 ARG LHAPDF_VERSION=6.2.3
-RUN mkdir /code && \
+RUN mkdir -p /code && \
     cd /code && \
     wget https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
     tar xvfz LHAPDF-${LHAPDF_VERSION}.tar.gz && \
@@ -99,7 +101,7 @@ WORKDIR ${HOME}/data
 ENV PYTHONPATH=/usr/local/lib:$PYTHONPATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ENV PATH ${HOME}/.local/bin:$PATH
-ENV PATH /usr/local/MG5_aMC_v2_7_2/bin:$PATH
+#ENV PATH /usr/local/MG5_aMC_v2_7_2/bin:$PATH
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
 CMD ["/bin/bash"]
