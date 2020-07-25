@@ -8,7 +8,7 @@ image:
 	--build-arg LHAPDF_VERSION=6.2.3 \
 	--build-arg MOMEMTA_VERSION=v1.0.0 \
 	-t matthewfeickert/momemta-python:latest \
-	-t matthewfeickert/momemta-python:2.7.2
+	-t matthewfeickert/momemta-python:1.0.0
 	--compress .
 
 debug:
