@@ -1,8 +1,6 @@
 ARG BUILDER_IMAGE=atlasamglab/stats-base:root6.22.00-python3.8
 FROM ${BUILDER_IMAGE} as builder
 
-MAINTAINER Matthew Feickert <matthewfeickert@users.noreply.github.com>
-
 USER root
 WORKDIR /usr/local
 
@@ -36,8 +34,8 @@ RUN mkdir -p /code && \
     tar xvfz LHAPDF-${LHAPDF_VERSION}.tar.gz && \
     cd LHAPDF-${LHAPDF_VERSION} && \
     ./configure --help && \
-    export CXX=$(which g++) && \
-    export PYTHON=$(which python) && \
+    export CXX=$(command -v g++) && \
+    export PYTHON=$(command -v python) && \
     ./configure \
       --prefix=/usr/local && \
     make -j$(($(nproc) - 1)) && \
