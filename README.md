@@ -7,7 +7,8 @@
 > `MoMEMta` is a C++ software package to compute Matrix Element weights. Designed in a modular way, it covers the needs of experimental analysis workflows at the LHC.
 
 `MoMEMta`'s source is [distributed on GitHub](https://github.com/MoMEMta/MoMEMta) and is a product of the `MoMEMta` development team.
-[![DOI](https://zenodo.org/badge/DOI/10.1140/epjc/s10052-019-6635-5.svg)](https://doi.org/10.1140/epjc/s10052-019-6635-5)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1250697.svg)](https://doi.org/10.5281/zenodo.1250697)
+[![paper-DOI](https://zenodo.org/badge/DOI/10.1140/epjc/s10052-019-6635-5.svg)](https://doi.org/10.1140/epjc/s10052-019-6635-5)
 
 
 ## Use
