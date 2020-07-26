@@ -66,6 +66,9 @@ RUN mkdir -p /code && \
     cmake --build . --target install && \
     rm -rf /code
 
+COPY download-lhapdf.sh /usr/local/bin/download-lhapdf
+RUN chmod +x /usr/local/bin/download-lhapdf
+
 # Enable tab completion by uncommenting it from /etc/bash.bashrc
 # The relevant lines are those below the phrase "enable bash completion in interactive shells"
 RUN export SED_RANGE="$(($(sed -n '\|enable bash completion in interactive shells|=' /etc/bash.bashrc)+1)),$(($(sed -n '\|enable bash completion in interactive shells|=' /etc/bash.bashrc)+7))" && \
