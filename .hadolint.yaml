@@ -1,0 +1,5 @@
+ignored:
+  - DL3006 # Always tag the version of an image explicitly
+  - DL3008 # Pin versions in apt get install
+  - DL3002 # Last USER should not be root
+  - DL3003 # Use WORKDIR to switch to a directory
