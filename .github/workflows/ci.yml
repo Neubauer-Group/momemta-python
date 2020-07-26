@@ -25,10 +25,10 @@ jobs:
         push: false
     - name: List Built Images
       run: docker images
-    # - name: Run test program
-    #   run: >-
-    #     docker run --rm
-    #     -v $PWD:$PWD
-    #     -w $PWD
-    #     matthewfeickert/momemta-python:test
-    #     -c "mg5_aMC tests/test_top_mass_scan.txt"
+    - name: Run test program
+      run: >-
+        docker run --rm
+        -v $PWD:$PWD
+        -w $PWD
+        matthewfeickert/momemta-python:test
+        "bash tests/tt_fullyleptonic_tutorial.sh"
