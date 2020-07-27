@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-download-lhapdf CT10nlo
+lhapdf get CT10nlo
 
 # Clone and built tutorials
 git clone --depth 1 https://github.com/MoMEMta/Tutorials.git \
