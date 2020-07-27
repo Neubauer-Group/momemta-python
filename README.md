@@ -18,6 +18,49 @@ docker pull matthewfeickert/momemta-python:latest
 docker run --rm -it matthewfeickert/momemta-python:latest
 ```
 
+### LHAPDF PDF Sets
+
+No LHAPDF PDF sets are included in the Docker image by default.
+To download LHAPDF PDF sets for use, use the `lhapdf get` CLI
+
+```
+$ lhapdf --help
+usage: lhapdf [-h] [--listdir LISTDIR] [--pdfdir PDFDIR] [--source SOURCES] [--quiet] [--verbose] [--version] COMMAND [suboptions]
+
+A program for managing LHAPDF parton distribution function data files.
+
+The main sub-commands that can be used are:
+  - list|ls:     list available PDF sets, optionally filtered and/or categorised by status
+  - show:        show metadata details of specified PDF sets
+  - update:      download and install a new PDF set index file
+  - install|get: download and install new PDF set data files
+  - upgrade:     download and install newer replacement PDF set data files where available
+
+positional arguments:
+  COMMAND [suboptions]  Subcommand to run
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --listdir LISTDIR     Directory containing the lhapdf.index list file [default: /usr/local/share/LHAPDF]
+  --pdfdir PDFDIR       Directory for installation of PDF set data [default: /usr/local/share/LHAPDF]
+  --source SOURCES      Prepend a path or URL to be used as a source of data files [default: ['/cvmfs/sft.cern.ch/lcg/external/lhapdfsets/current/', 'http://lhapdfsets.web.cern.ch/lhapdfsets/current/']]
+  --quiet               Suppress normal messages
+  --verbose             Output debug messages
+  --version             show program's version number and exit
+```
+
+Example:
+
+```
+$ lhapdf get CT10nlo
+$ lhapdf show CT10nlo | grep ID
+LHAPDF ID: 11000
+$ find /usr/local/ -iname "CT10nlo.info"
+/usr/local/share/LHAPDF/CT10nlo/CT10nlo.info
+```
+
+A [complete list of available LHAPDF PDF sets](https://lhapdf.hepforge.org/pdfsets.html) is available on the LHAPDF website.
+
 ## Tests
 
 To run the [MoMEMta `TTbar_FullyLeptonic` tutorial](https://github.com/MoMEMta/Tutorials/tree/v1.0.0) (compute weights under the hypothesis of top quark pair production with fully leptonic decay) either run
