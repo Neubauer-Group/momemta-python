@@ -95,25 +95,13 @@ jobs:
           neubauergroup/momemta-python:sha-${GITHUB_SHA::8}
           'printenv'
 
-      - name: Check CPython version
-        run: >-
-          docker run --rm
-          neubauergroup/momemta-python:sha-${GITHUB_SHA::8}
-          'python --version --version && echo "" && python -m pip list'
-
-      - name: Check yum still works after shebang manipulation
-        run: >-
-          docker run --rm
-          neubauergroup/momemta-python:sha-${GITHUB_SHA::8}
-          'yum --version && yum update -y'
-
-      - name: Check gcc finds /usr/local/include/python3.8/Python.h
+      - name: Run test program
         run: >-
           docker run --rm
           -v $PWD:$PWD
           -w $PWD
           neubauergroup/momemta-python:sha-${GITHUB_SHA::8}
-          'gcc tests/test-gcc-include.c -o test-gcc-include && ./test-gcc-include'
+          'bash tests/tt_fullyleptonic_tutorial.sh'
 
       - name: Build and publish to registry
         # every PR will trigger a push event on main, so check the push event is actually coming from main
