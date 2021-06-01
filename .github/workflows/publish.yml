@@ -20,7 +20,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: matthewfeickert/momemta-python
+        repository: neubauergroup/momemta-python
         dockerfile: Dockerfile
         tags: latest
     - name: Build and Publish to Registry with Release Tag
@@ -29,7 +29,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: matthewfeickert/momemta-python
+        repository: neubauergroup/momemta-python
         dockerfile: Dockerfile
         tags: latest,latest-stable
         tag_with_ref: true

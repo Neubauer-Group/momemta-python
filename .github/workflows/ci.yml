@@ -17,7 +17,7 @@ jobs:
       if: "!(startsWith(github.ref, 'refs/tags/'))"
       uses: docker/build-push-action@v1
       with:
-        repository: matthewfeickert/momemta-python
+        repository: neubauergroup/momemta-python
         dockerfile: Dockerfile
         tags: test
         tag_with_sha: true
@@ -30,5 +30,5 @@ jobs:
         docker run --rm
         -v $PWD:$PWD
         -w $PWD
-        matthewfeickert/momemta-python:test
+        neubauergroup/momemta-python:test
         "bash tests/tt_fullyleptonic_tutorial.sh"
