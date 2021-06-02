@@ -72,5 +72,5 @@ make test
 or the equivalent following command
 
 ```
-docker run --rm -v $PWD:$PWD -w $PWD neubauergroup/momemta-python:latest "bash tests/tt_fullyleptonic_tutorial.sh"
+docker run --rm -v $PWD:$PWD -w $PWD neubauergroup/momemta-python:latest 'bash tests/tt_fullyleptonic_tutorial.sh'
 ```
