@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE=atlasamglab/stats-base:root6.22.00-python3.8
+ARG BUILDER_IMAGE=atlasamglab/stats-base:root6.24.00
 FROM ${BUILDER_IMAGE} as builder
 
 USER root
