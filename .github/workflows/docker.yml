@@ -98,6 +98,7 @@ jobs:
       - name: Run test program
         run: >-
           docker run --rm
+          --user root
           -v $PWD:$PWD
           -w $PWD
           neubauergroup/momemta-python:sha-${GITHUB_SHA::8}
