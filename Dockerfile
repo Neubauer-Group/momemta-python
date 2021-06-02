@@ -86,6 +86,7 @@ ENV LANG=C.UTF-8
 
 ENV HOME /home/docker
 WORKDIR ${HOME}/data
+# hadolint ignore=SC2016
 RUN cp /root/.profile ${HOME}/.profile && \
     cp /root/.bashrc ${HOME}/.bashrc && \
     echo "" >> ${HOME}/.bashrc && \
