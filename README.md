@@ -1,6 +1,6 @@
 # MoMEMta Docker image with Python 3 and LHAPDF
 
-[![Docker Images](https://github.com/Neubauer-Group/momemta-python/actions/workflows/docker.yml/badge.svg?branch=main)](https://github.com/Neubauer-Group/momemta-python/actions/workflows/docker.yml?query=branch%3Amain+)
+[![Docker Images](https://github.com/Neubauer-Group/momemta-python/actions/workflows/docker-debian.yml/badge.svg?branch=main)](https://github.com/Neubauer-Group/momemta-python/actions/workflows/docker-debian.yml?query=branch%3Amain+)
 [![Docker Pulls](https://img.shields.io/docker/pulls/neubauergroup/momemta-python)](https://hub.docker.com/r/neubauergroup/momemta-python)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/neubauergroup/momemta-python/latest)](https://hub.docker.com/r/neubauergroup/momemta-python/tags?name=latest)
 
