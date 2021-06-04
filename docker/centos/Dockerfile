@@ -6,25 +6,17 @@ WORKDIR /usr/local
 
 SHELL [ "/bin/bash", "-c" ]
 
-RUN apt-get -qq -y update && \
-    apt-get -qq -y --no-install-recommends install \
-      gcc \
-      g++ \
-      gfortran \
-      make \
-      cmake \
-      libboost-all-dev \
+RUN yum update -y && \
+    yum install -y \
+      boost-devel \
       vim \
-      zlibc \
-      zlib1g-dev \
-      libbz2-dev \
-      rsync \
-      git \
+      zlib \
+      zlib-devel \
+      bzip2-devel \
       bash-completion \
       wget && \
-    apt-get -y autoclean && \
-    apt-get -y autoremove && \
-    rm -rf /var/lib/apt-get/lists/*
+    yum clean all && \
+    yum autoremove -y
 
 # Install LHAPDF
 ARG LHAPDF_VERSION=6.2.3
