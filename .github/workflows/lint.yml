@@ -9,7 +9,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Lint Dockerfile
+
+      - name: Lint Debian Dockerfile
         uses: brpaz/hadolint-action@v1.1.0
         with:
-          dockerfile: "Dockerfile"
+          dockerfile: "docker/debian/Dockerfile"
+
+      - name: Lint CentOS Dockerfile
+        uses: brpaz/hadolint-action@v1.1.0
+        with:
+          dockerfile: "docker/centos/Dockerfile"
