@@ -50,9 +50,6 @@ RUN mkdir -p /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
-    cd MoMEMta/ && \
-    mkdir build && \
-    cd build && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DTESTS=OFF \
@@ -61,9 +58,10 @@ RUN mkdir -p /code && \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
       -DBoost_PYTHON_VERSION_TAG=3 \
-      .. && \
-    cmake --build . -- -j$(($(nproc) - 1)) && \
-    cmake --build . --target install && \
+      -S MoMEMta \
+      -B build && \
+    cmake --build build -- -j$(($(nproc) - 1)) && \
+    cmake --build build --target install && \
     rm -rf /code
 
 # Enable tab completion by uncommenting it from /etc/bash.bashrc

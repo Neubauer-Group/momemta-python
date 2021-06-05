@@ -42,7 +42,6 @@ RUN mkdir -p /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
-    cd MoMEMta/ && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DTESTS=OFF \
@@ -55,8 +54,8 @@ RUN mkdir -p /code && \
       -S MoMEMta \
       -B build && \
     cmake build -L && \
-    cmake --build . -- -j$(($(nproc) - 1)) && \
-    cmake --build . --target install && \
+    cmake --build build -- -j$(($(nproc) - 1)) && \
+    cmake --build build --target install && \
     rm -rf /code
 
 # Create user "docker"
