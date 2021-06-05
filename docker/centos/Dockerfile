@@ -21,13 +21,12 @@ RUN yum update -y && \
 
 # Install BOOST
 # c.f. https://www.boost.org/doc/libs/1_76_0/more/getting_started/unix-variants.html
-# curl --silent --location --remote-name "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
-ARG BOOST_VERSION=1.70.0
+ARG BOOST_VERSION=1.76.0
 # hadolint ignore=SC2046
 RUN mkdir -p /code && \
     cd /code && \
     BOOST_VERSION_UNDERSCORE="${BOOST_VERSION//\./_}" && \
-    curl --silent --location --remote-name "https://sourceforge.net/projects/boost/files/boost/${BOOST_VERSION}/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
+    curl --silent --location --remote-name "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
     tar -xzf "boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
     cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
     source scl_source enable devtoolset-8 && \
