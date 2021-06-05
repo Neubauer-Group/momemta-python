@@ -8,7 +8,6 @@ SHELL [ "/bin/bash", "-c" ]
 
 RUN yum update -y && \
     yum install -y \
-      boost169-devel \
       vim \
       zlib \
       zlib-devel \
@@ -17,6 +16,21 @@ RUN yum update -y && \
       wget && \
     yum clean all && \
     yum autoremove -y
+
+# Install BOOST
+# c.f. https://www.boost.org/doc/libs/1_76_0/more/getting_started/unix-variants.html
+ARG BOOST_VERSION=1.76.0
+RUN mkdir -p /code && \
+    cd /code && \
+    BOOST_VERSION_UNDERSCORE="$(echo ${BOOST_VERSION} | sed 's/\./_/g')" && \
+    curl --silent --location --remote-name "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
+    tar -xzf "boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
+    cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
+    ./bootstrap.sh --help && \
+    ./bootstrap.sh --with-python=$(command -v python) && \
+    ./b2 install && \
+    cd / && \
+    rm -rf /code
 
 # Install LHAPDF
 ARG LHAPDF_VERSION=6.2.3
@@ -35,7 +49,6 @@ RUN mkdir -p /code && \
     make install && \
     rm -rf /code
 
-# Install MoMEMta
 ARG MOMEMTA_VERSION=v1.0.0
 RUN mkdir -p /code && \
     cd /code && \
@@ -50,7 +63,6 @@ RUN mkdir -p /code && \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
       -DBoost_PYTHON_VERSION_TAG=3 \
-      -DBoost_INCLUDE_DIR=/usr/include/boost169 \
       -S MoMEMta \
       -B build && \
     cmake build -L && \
