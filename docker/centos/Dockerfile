@@ -28,7 +28,7 @@ RUN mkdir -p /code && \
     cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
     ./bootstrap.sh --help && \
     ./bootstrap.sh --with-python=$(command -v python) && \
-    ./b2 install && \
+    ./b2 install -j$(($(nproc) - 1)) && \
     cd / && \
     rm -rf /code
 
