@@ -15,7 +15,7 @@ RUN yum update -y && \
       bzip2-devel \
       bash-completion \
       wget && \
-    yum install -y devtoolset-4 && \
+    yum install -y devtoolset-8 && \
     yum clean all && \
     yum autoremove -y
 
@@ -30,7 +30,7 @@ RUN mkdir -p /code && \
     curl --silent --location --remote-name "https://sourceforge.net/projects/boost/files/boost/${BOOST_VERSION}/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
     tar -xzf "boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
     cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
-    scl enable devtoolset-4 bash && \
+    scl enable devtoolset-8 bash && \
     ./bootstrap.sh --help && \
     ./bootstrap.sh --with-python=$(command -v python) && \
     ./b2 install -j$(($(nproc) - 1)) && \
@@ -46,7 +46,7 @@ RUN mkdir -p /code && \
     wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
     tar xvfz LHAPDF-${LHAPDF_VERSION}.tar.gz && \
     cd LHAPDF-${LHAPDF_VERSION} && \
-    scl enable devtoolset-4 bash && \
+    scl enable devtoolset-8 bash && \
     ./configure --help && \
     export CXX=$(command -v g++) && \
     export PYTHON=$(command -v python) && \
@@ -62,7 +62,7 @@ RUN mkdir -p /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
-    scl enable devtoolset-4 bash && \
+    scl enable devtoolset-8 bash && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DTESTS=OFF \
