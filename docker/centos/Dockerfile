@@ -21,6 +21,7 @@ RUN yum update -y && \
 # c.f. https://www.boost.org/doc/libs/1_76_0/more/getting_started/unix-variants.html
 # curl --silent --location --remote-name "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
 ARG BOOST_VERSION=1.70.0
+# hadolint ignore=SC2046
 RUN mkdir -p /code && \
     cd /code && \
     BOOST_VERSION_UNDERSCORE="${BOOST_VERSION//\./_}" && \
@@ -36,6 +37,7 @@ RUN mkdir -p /code && \
 # Install LHAPDF
 ARG LHAPDF_VERSION=6.2.3
 # hadolint ignore=SC2155
+# hadolint ignore=DL4001
 RUN mkdir -p /code && \
     cd /code && \
     wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
