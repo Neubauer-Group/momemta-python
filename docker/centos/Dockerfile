@@ -19,7 +19,7 @@ RUN yum update -y && \
 
 # Install BOOST
 # c.f. https://www.boost.org/doc/libs/1_76_0/more/getting_started/unix-variants.html
-ARG BOOST_VERSION=1.76.0
+ARG BOOST_VERSION=1.54.0
 RUN mkdir -p /code && \
     cd /code && \
     BOOST_VERSION_UNDERSCORE="${BOOST_VERSION//\./_}" && \
