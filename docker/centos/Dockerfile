@@ -8,7 +8,7 @@ SHELL [ "/bin/bash", "-c" ]
 
 RUN yum update -y && \
     yum install -y \
-      boost-devel \
+      boost169-devel \
       vim \
       zlib \
       zlib-devel \
