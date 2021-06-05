@@ -95,6 +95,12 @@ jobs:
           neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
           'printenv'
 
+      - name: Check glibc version
+        run: >-
+          docker run --rm
+          neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
+          'ldd --version'
+
       - name: Run test program
         run: >-
           docker run --rm
