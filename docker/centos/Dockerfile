@@ -43,8 +43,6 @@ RUN mkdir -p /code && \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
     cd MoMEMta/ && \
-    mkdir build && \
-    cd build && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DTESTS=OFF \
@@ -53,7 +51,10 @@ RUN mkdir -p /code && \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
       -DBoost_PYTHON_VERSION_TAG=3 \
-      .. && \
+      -DBoost_INCLUDE_DIR=/usr/include/boost169 \
+      -S MoMEMta \
+      -B build && \
+    cmake build -L && \
     cmake --build . -- -j$(($(nproc) - 1)) && \
     cmake --build . --target install && \
     rm -rf /code
