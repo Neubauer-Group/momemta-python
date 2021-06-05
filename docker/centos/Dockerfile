@@ -22,7 +22,7 @@ RUN yum update -y && \
 ARG BOOST_VERSION=1.76.0
 RUN mkdir -p /code && \
     cd /code && \
-    BOOST_VERSION_UNDERSCORE="$(echo ${BOOST_VERSION} | sed 's/\./_/g')" && \
+    BOOST_VERSION_UNDERSCORE="${BOOST_VERSION//\./_}" && \
     curl --silent --location --remote-name "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
     tar -xzf "boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
     cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
