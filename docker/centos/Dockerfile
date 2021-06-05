@@ -67,7 +67,7 @@ RUN mkdir -p /code && \
       -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DTESTS=OFF \
       -DEXAMPLES=OFF \
-      -DCMAKE_CXX_STANDARD=11 \
+      -DCMAKE_CXX_STANDARD=17 \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
       -DBoost_PYTHON_VERSION_TAG=3 \
