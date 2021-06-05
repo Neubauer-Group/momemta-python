@@ -89,7 +89,7 @@ RUN useradd --shell /bin/bash -m docker && \
 ENV HOME /home/docker
 WORKDIR ${HOME}/data
 # hadolint ignore=SC2016
-RUN cp /root/.profile ${HOME}/.profile && \
+RUN cp /root/.bash_profile ${HOME}/.bash_profile && \
     cp /root/.bashrc ${HOME}/.bashrc && \
     echo "" >> ${HOME}/.bashrc && \
     echo 'export PATH=${HOME}/.local/bin:$PATH' >> ${HOME}/.bashrc
