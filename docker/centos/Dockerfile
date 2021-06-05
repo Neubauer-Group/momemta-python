@@ -39,8 +39,7 @@ RUN mkdir -p /code && \
 
 # Install LHAPDF
 ARG LHAPDF_VERSION=6.2.3
-# hadolint ignore=SC2155
-# hadolint ignore=DL4001
+# hadolint ignore=SC2155,SC1091
 RUN mkdir -p /code && \
     cd /code && \
     wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
@@ -57,6 +56,7 @@ RUN mkdir -p /code && \
     rm -rf /code
 
 ARG MOMEMTA_VERSION=v1.0.0
+# hadolint ignore=SC1091
 RUN mkdir -p /code && \
     cd /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
@@ -88,7 +88,7 @@ RUN useradd --shell /bin/bash -m docker && \
 
 ENV HOME /home/docker
 WORKDIR ${HOME}/data
-# hadolint ignore=SC2016
+# hadolint ignore=SC2016,SC1091
 RUN cp /root/.bash_profile ${HOME}/.bash_profile && \
     cp /root/.bashrc ${HOME}/.bashrc && \
     echo "" >> ${HOME}/.bashrc && \
