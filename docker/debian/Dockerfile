@@ -92,8 +92,8 @@ RUN cp /root/.profile ${HOME}/.profile && \
 
 ENV USER docker
 USER docker
-ENV PYTHONPATH=/usr/local/lib:$PYTHONPATH
-ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+ENV PYTHONPATH=/usr/local/venv/lib:$PYTHONPATH
+ENV LD_LIBRARY_PATH=/usr/local/venv/lib:$LD_LIBRARY_PATH
 ENV PATH ${HOME}/.local/bin:$PATH
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
