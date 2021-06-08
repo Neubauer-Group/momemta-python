@@ -31,7 +31,7 @@ RUN mkdir -p /code && \
     cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
     source scl_source enable devtoolset-8 && \
     ./bootstrap.sh --help && \
-    ./bootstrap.sh --with-python=$(command -v python) && \
+    ./bootstrap.sh --with-python=$(command -v python3) && \
     ./b2 install -j$(($(nproc) - 1)) && \
     cd / && \
     rm -rf /code
@@ -47,7 +47,7 @@ RUN mkdir -p /code && \
     source scl_source enable devtoolset-8 && \
     ./configure --help && \
     export CXX=$(command -v g++) && \
-    export PYTHON=$(command -v python) && \
+    export PYTHON=$(command -v python3) && \
     ./configure \
       --prefix=/usr/local && \
     make -j$(($(nproc) - 1)) && \
