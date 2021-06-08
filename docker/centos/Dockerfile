@@ -41,7 +41,7 @@ ARG LHAPDF_VERSION=6.2.3
 # hadolint ignore=SC2155,SC1091
 RUN mkdir -p /code && \
     cd /code && \
-    wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
+    wget https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
     tar xvfz LHAPDF-${LHAPDF_VERSION}.tar.gz && \
     cd LHAPDF-${LHAPDF_VERSION} && \
     source scl_source enable devtoolset-8 && \
