@@ -49,7 +49,7 @@ RUN mkdir -p /code && \
     export CXX=$(command -v g++) && \
     export PYTHON=$(command -v python3) && \
     ./configure \
-      --prefix=/usr/local && \
+      --prefix=/usr/local/venv && \
     make -j$(($(nproc) - 1)) && \
     make install && \
     rm -rf /code
@@ -63,7 +63,7 @@ RUN mkdir -p /code && \
       --single-branch && \
     source scl_source enable devtoolset-8 && \
     cmake \
-      -DCMAKE_INSTALL_PREFIX=/usr/local \
+      -DCMAKE_INSTALL_PREFIX=/usr/local/venv \
       -DTESTS=OFF \
       -DEXAMPLES=OFF \
       -DCMAKE_CXX_STANDARD=14 \
