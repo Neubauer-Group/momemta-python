@@ -4,7 +4,7 @@ all: image
 
 image:
 	docker build . \
-	-f Dockerfile \
+	-f docker/debian/Dockerfile \
 	--build-arg LHAPDF_VERSION=6.2.3 \
 	--build-arg MOMEMTA_VERSION=v1.0.0 \
 	-t neubauergroup/momemta-python:latest \
@@ -13,7 +13,7 @@ image:
 
 debug:
 	docker build . \
-	-f Dockerfile \
+	-f docker/debian/Dockerfile \
 	--build-arg LHAPDF_VERSION=6.2.3 \
 	--build-arg MOMEMTA_VERSION=v1.0.0 \
 	-t neubauergroup/momemta-python:debug-local

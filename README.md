@@ -51,12 +51,12 @@ optional arguments:
 
 Example:
 
-```
+```console
 $ lhapdf get CT10nlo
 $ lhapdf show CT10nlo | grep ID
 LHAPDF ID: 11000
 $ find /usr/local/ -iname "CT10nlo.info"
-/usr/local/share/LHAPDF/CT10nlo/CT10nlo.info
+/usr/local/venv/share/LHAPDF/CT10nlo/CT10nlo.info
 ```
 
 A [complete list of available LHAPDF PDF sets](https://lhapdf.hepforge.org/pdfsets.html) is available on the LHAPDF website.

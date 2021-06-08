@@ -4,7 +4,7 @@ FROM ${BUILDER_IMAGE} as builder
 USER root
 WORKDIR /usr/local
 
-SHELL [ "/bin/bash", "-c" ]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN yum update -y && \
     yum install -y \
@@ -31,7 +31,9 @@ RUN mkdir -p /code && \
     cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
     source scl_source enable devtoolset-8 && \
     ./bootstrap.sh --help && \
-    ./bootstrap.sh --with-python=$(command -v python3) && \
+    ./bootstrap.sh \
+      --prefix=/usr/local/venv \
+      --with-python=$(command -v python3) && \
     ./b2 install -j$(($(nproc) - 1)) && \
     cd / && \
     rm -rf /code
@@ -54,6 +56,8 @@ RUN mkdir -p /code && \
     make install && \
     rm -rf /code
 
+# MOMEMTA CXX_STANDARD must match ROOT's
+# Currently using C++14
 ARG MOMEMTA_VERSION=v1.0.0
 # hadolint ignore=SC1091
 RUN mkdir -p /code && \
@@ -62,11 +66,13 @@ RUN mkdir -p /code && \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
     source scl_source enable devtoolset-8 && \
+    ROOT_CONFIG_CXX=$(root-config --cflags | awk '{print $2}') && \
+    ROOT_CXX_STANDARD="${ROOT_CONFIG_CXX: -2}" && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local/venv \
       -DTESTS=OFF \
       -DEXAMPLES=OFF \
-      -DCMAKE_CXX_STANDARD=14 \
+      -DCMAKE_CXX_STANDARD="${ROOT_CXX_STANDARD}" \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
       -DBoost_PYTHON_VERSION_TAG=3 \
