@@ -3,3 +3,7 @@ ignored:
   - DL3008 # Pin versions in apt get install
   - DL3002 # Last USER should not be root
   - DL3003 # Use WORKDIR to switch to a directory
+  - DL3031 # Do not use yum update
+  - DL3033 # Specify version with `yum install -y <package>-<version>`
+  - DL3047 # Avoid use of wget without progress bar
+  - DL4001 # Either use Wget or Curl but not both

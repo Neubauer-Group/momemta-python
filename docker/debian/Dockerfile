@@ -38,7 +38,7 @@ RUN mkdir -p /code && \
     export CXX=$(command -v g++) && \
     export PYTHON=$(command -v python) && \
     ./configure \
-      --prefix=/usr/local && \
+      --prefix=/usr/local/venv && \
     make -j$(($(nproc) - 1)) && \
     make install && \
     rm -rf /code
@@ -50,20 +50,18 @@ RUN mkdir -p /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
-    cd MoMEMta/ && \
-    mkdir build && \
-    cd build && \
     cmake \
-      -DCMAKE_INSTALL_PREFIX=/usr/local \
+      -DCMAKE_INSTALL_PREFIX=/usr/local/venv \
       -DTESTS=OFF \
       -DEXAMPLES=OFF \
       -DCMAKE_CXX_STANDARD=17 \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
       -DBoost_PYTHON_VERSION_TAG=3 \
-      .. && \
-    cmake --build . -- -j$(($(nproc) - 1)) && \
-    cmake --build . --target install && \
+      -S MoMEMta \
+      -B build && \
+    cmake --build build -- -j$(($(nproc) - 1)) && \
+    cmake --build build --target install && \
     rm -rf /code
 
 # Enable tab completion by uncommenting it from /etc/bash.bashrc
@@ -94,8 +92,8 @@ RUN cp /root/.profile ${HOME}/.profile && \
 
 ENV USER docker
 USER docker
-ENV PYTHONPATH=/usr/local/lib:$PYTHONPATH
-ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+ENV PYTHONPATH=/usr/local/venv/lib:$PYTHONPATH
+ENV LD_LIBRARY_PATH=/usr/local/venv/lib:$LD_LIBRARY_PATH
 ENV PATH ${HOME}/.local/bin:$PATH
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]

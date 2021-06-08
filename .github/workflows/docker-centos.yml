@@ -1,4 +1,4 @@
-name: Docker Images
+name: Docker Images CentOS
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=neubauergroup/momemta-python
+          DOCKER_IMAGE=neubauergroup/momemta-python-centos
           VERSION=latest
           REPO_NAME=${{github.repository}}
           REPO_NAME_LOWERCASE="${REPO_NAME,,}"
@@ -74,7 +74,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile
+          file: docker/centos/Dockerfile
           tags: ${{ steps.prep.outputs.tags }}
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
@@ -92,8 +92,14 @@ jobs:
       - name: Check environment variables
         run: >-
           docker run --rm
-          neubauergroup/momemta-python:sha-${GITHUB_SHA::8}
+          neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
           'printenv'
+
+      - name: Check glibc version
+        run: >-
+          docker run --rm
+          neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
+          'ldd --version'
 
       - name: Run test program
         run: >-
@@ -101,8 +107,10 @@ jobs:
           --user root
           -v $PWD:$PWD
           -w $PWD
-          neubauergroup/momemta-python:sha-${GITHUB_SHA::8}
-          'bash tests/tt_fullyleptonic_tutorial.sh'
+          neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
+          'source scl_source enable devtoolset-8 && \
+           sed -i 's/CMAKE_CXX_STANDARD=17/CMAKE_CXX_STANDARD=14/g' tests/tt_fullyleptonic_tutorial.sh && \
+           . tests/tt_fullyleptonic_tutorial.sh'
 
       - name: Build and publish to registry
         # every PR will trigger a push event on main, so check the push event is actually coming from main
@@ -111,9 +119,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile
+          file: docker/centos/Dockerfile
           tags: |
-            neubauergroup/momemta-python:latest
+            neubauergroup/momemta-python-centos:latest
             ghcr.io/${{ steps.prep.outputs.repo_name_lowercase }}:latest
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
@@ -127,7 +135,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile
+          file: docker/centos/Dockerfile
           tags: ${{ steps.prep.outputs.tags }}
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
