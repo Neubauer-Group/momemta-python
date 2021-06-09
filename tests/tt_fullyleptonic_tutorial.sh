@@ -1,28 +1,27 @@
 #!/usr/bin/env bash
 
+# Download required LHAPDF set
 lhapdf get CT10nlo
 
-# Clone and built tutorials
+# Clone and build tutorials
 git clone --depth 1 https://github.com/MoMEMta/Tutorials.git \
   --branch v1.0.0 \
   --single-branch
-cd Tutorials
-mkdir build
-cd build
 cmake \
   -DCMAKE_CXX_STANDARD=17 \
-  ..
-cmake --build . -- -j$(($(nproc) - 1))
+  -S Tutorials \
+  -B Tutorials/build
+cmake Tutorials/build -L
+cmake --build Tutorials/build -- -j$(($(nproc) - 1))
 
-# Built Matrix Elements
-cd ../TTbar_FullyLeptonic/MatrixElement/
-mkdir build
-cd build
+# Build Matrix Elements
 cmake \
   -DCMAKE_CXX_STANDARD=17 \
-  ..
-cmake --build . -- -j$(($(nproc) - 1))
+  -S Tutorials/TTbar_FullyLeptonic/MatrixElement \
+  -B Tutorials/TTbar_FullyLeptonic/MatrixElement/build
+cmake Tutorials/TTbar_FullyLeptonic/MatrixElement/build -L
+cmake --build Tutorials/TTbar_FullyLeptonic/MatrixElement/build -- -j$(($(nproc) - 1))
 
 # Run ttbar fully leptonic example
-cd ../../../build/
+cd Tutorials/build
 TTbar_FullyLeptonic/TTbar_FullyLeptonic.exe
