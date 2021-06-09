@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Download required LHAPDF set
 lhapdf get CT10nlo
 
 # Clone and build tutorials
