@@ -11,7 +11,7 @@ lhapdf get CT10nlo
 # Get CMAKE_CXX_STANDARD ROOT was built with
 ROOT_CONFIG_CXX=$(root-config --cflags | awk '{print $2}')
 ROOT_CXX_STANDARD="${ROOT_CONFIG_CXX: -2}"
-unset ROOT_CXX_STANDARD
+unset ROOT_CONFIG_CXX
 
 # Clone and build tutorials
 git clone --depth 1 https://github.com/MoMEMta/Tutorials.git \
@@ -36,4 +36,4 @@ cmake --build Tutorials/TTbar_FullyLeptonic/MatrixElement/build -- -j$(($(nproc)
 cd Tutorials/build
 TTbar_FullyLeptonic/TTbar_FullyLeptonic.exe
 
-unset CMAKE_CXX_STANDARD
+unset ROOT_CXX_STANDARD
