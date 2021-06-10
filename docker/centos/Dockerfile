@@ -58,7 +58,7 @@ RUN mkdir -p /code && \
 
 # MOMEMTA CXX_STANDARD must match ROOT's
 # Currently using C++14
-ARG MOMEMTA_VERSION=v1.0.0
+ARG MOMEMTA_VERSION=v1.0.1
 # hadolint ignore=SC1091
 RUN mkdir -p /code && \
     cd /code && \

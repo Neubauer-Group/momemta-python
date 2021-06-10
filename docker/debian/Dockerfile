@@ -44,7 +44,7 @@ RUN mkdir -p /code && \
     rm -rf /code
 
 # Install MoMEMta
-ARG MOMEMTA_VERSION=v1.0.0
+ARG MOMEMTA_VERSION=v1.0.1
 RUN mkdir -p /code && \
     cd /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
