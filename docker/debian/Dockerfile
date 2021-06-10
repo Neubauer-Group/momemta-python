@@ -4,7 +4,7 @@ FROM ${BUILDER_IMAGE} as builder
 USER root
 WORKDIR /usr/local
 
-SHELL [ "/bin/bash", "-c" ]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get -qq -y update && \
     apt-get -qq -y --no-install-recommends install \
