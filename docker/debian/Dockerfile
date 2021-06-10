@@ -50,11 +50,12 @@ RUN mkdir -p /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
+    ROOT_CXX_STANDARD=$(root-config --cflags | sed --regexp-extended 's/.*-std=c\+\+([0-9]+).*/\1/g') && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local/venv \
       -DTESTS=OFF \
       -DEXAMPLES=OFF \
-      -DCMAKE_CXX_STANDARD=17 \
+      -DCMAKE_CXX_STANDARD="${ROOT_CXX_STANDARD}" \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
       -DBoost_PYTHON_VERSION_TAG=3 \
