@@ -109,7 +109,6 @@ jobs:
           -w $PWD
           neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
           'source scl_source enable devtoolset-8 && \
-           sed -i 's/CMAKE_CXX_STANDARD=17/CMAKE_CXX_STANDARD=14/g' tests/tt_fullyleptonic_tutorial.sh && \
            . tests/tt_fullyleptonic_tutorial.sh'
 
       - name: Build and publish to registry
