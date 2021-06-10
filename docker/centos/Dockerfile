@@ -66,8 +66,7 @@ RUN mkdir -p /code && \
       --branch "${MOMEMTA_VERSION}" \
       --single-branch && \
     source scl_source enable devtoolset-8 && \
-    ROOT_CONFIG_CXX=$(root-config --cflags | awk '{print $2}') && \
-    ROOT_CXX_STANDARD="${ROOT_CONFIG_CXX: -2}" && \
+    ROOT_CXX_STANDARD=$(root-config --cflags | sed --regexp-extended 's/.*-std=c\+\+([0-9]+).*/\1/g') && \
     cmake \
       -DCMAKE_INSTALL_PREFIX=/usr/local/venv \
       -DTESTS=OFF \

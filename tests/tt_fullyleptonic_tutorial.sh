@@ -9,9 +9,7 @@ set -o pipefail
 lhapdf get CT10nlo
 
 # Get CMAKE_CXX_STANDARD ROOT was built with
-ROOT_CONFIG_CXX=$(root-config --cflags | awk '{print $2}')
-ROOT_CXX_STANDARD="${ROOT_CONFIG_CXX: -2}"
-unset ROOT_CONFIG_CXX
+ROOT_CXX_STANDARD=$(root-config --cflags | sed --regexp-extended 's/.*-std=c\+\+([0-9]+).*/\1/g')
 
 # Clone and build tutorials
 git clone --depth 1 https://github.com/MoMEMta/Tutorials.git \
