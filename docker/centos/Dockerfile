@@ -1,60 +1,36 @@
-ARG BUILDER_IMAGE=neubauergroup/centos-root-base:6.24.00
+ARG BUILDER_IMAGE=scailfin/madgraph5-amc-nlo-centos:mg5_amc3.1.1
+FROM neubauergroup/centos-root-base:6.24.00 as root_cern_image
 FROM ${BUILDER_IMAGE} as builder
 
 USER root
-WORKDIR /usr/local
+WORKDIR /
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+COPY --from=root_cern_image /usr/local/root-cern /usr/local/root-cern
+COPY --from=root_cern_image /tmp/packages.txt /tmp/packages.txt
+COPY --from=root_cern_image /tmp/requirements.txt /tmp/requirements.txt
+ENV PYTHONPATH=/usr/local/root-cern/lib:$PYTHONPATH
+ENV LD_LIBRARY_PATH=/usr/local/root-cern/lib:$LD_LIBRARY_PATH
+ENV ROOTSYS=/usr/local/root-cern
+ENV PATH="${PATH}:${ROOTSYS}/bin"
+
+# hadolint ignore=SC2046
 RUN yum update -y && \
+    yum install -y epel-release && \
+    yum install -y $(cat /tmp/packages.txt) && \
     yum install -y \
-      centos-release-scl \
       vim \
       zlib \
       zlib-devel \
       bzip2-devel \
       bash-completion \
       wget && \
-    yum install -y devtoolset-8 && \
     yum clean all && \
-    yum autoremove -y
-
-# Install BOOST
-# c.f. https://www.boost.org/doc/libs/1_76_0/more/getting_started/unix-variants.html
-ARG BOOST_VERSION=1.76.0
-# hadolint ignore=SC2046
-RUN mkdir -p /code && \
-    cd /code && \
-    BOOST_VERSION_UNDERSCORE="${BOOST_VERSION//\./_}" && \
-    curl --silent --location --remote-name "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
-    tar -xzf "boost_${BOOST_VERSION_UNDERSCORE}.tar.gz" && \
-    cd "boost_${BOOST_VERSION_UNDERSCORE}" && \
-    source scl_source enable devtoolset-8 && \
-    ./bootstrap.sh --help && \
-    ./bootstrap.sh \
-      --prefix=/usr/local/venv \
-      --with-python=$(command -v python3) && \
-    ./b2 install -j$(($(nproc) - 1)) && \
-    cd / && \
-    rm -rf /code
-
-# Install LHAPDF
-ARG LHAPDF_VERSION=6.2.3
-# hadolint ignore=SC2155,SC1091
-RUN mkdir -p /code && \
-    cd /code && \
-    wget https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
-    tar xvfz LHAPDF-${LHAPDF_VERSION}.tar.gz && \
-    cd LHAPDF-${LHAPDF_VERSION} && \
-    source scl_source enable devtoolset-8 && \
-    ./configure --help && \
-    export CXX=$(command -v g++) && \
-    export PYTHON=$(command -v python3) && \
-    ./configure \
-      --prefix=/usr/local/venv && \
-    make -j$(($(nproc) - 1)) && \
-    make install && \
-    rm -rf /code
+    yum autoremove -y && \
+    python -m pip --no-cache-dir install --upgrade pip setuptools wheel && \
+    python -m pip --no-cache-dir install --requirement /tmp/requirements.txt && \
+    python -m pip list
 
 # MOMEMTA CXX_STANDARD must match ROOT's
 # Currently using C++14
@@ -82,23 +58,18 @@ RUN mkdir -p /code && \
     cmake --build build --target install && \
     rm -rf /code
 
-# Create user "docker"
-RUN useradd --shell /bin/bash -m docker && \
-   cp /root/.bashrc /home/docker/ && \
-   mkdir /home/docker/data && \
-   chown -R --from=root docker /home/docker && \
-   chown -R --from=root docker /usr && \
-   chown -R --from=root docker /usr/local
+RUN cd /usr/local/venv/MG5_aMC/PLUGIN/ && \
+    git clone --depth 1 https://github.com/MoMEMta/MoMEMta-MaGMEE.git \
+    --branch v1.0.0 \
+    --single-branch
 
 ENV HOME /home/docker
 WORKDIR ${HOME}/data
-# hadolint ignore=SC2016,SC1091
-RUN cp /root/.bash_profile ${HOME}/.bash_profile && \
-    cp /root/.bashrc ${HOME}/.bashrc && \
-    echo "" >> ${HOME}/.bashrc && \
-    echo 'export PATH=${HOME}/.local/bin:$PATH' >> ${HOME}/.bashrc
+RUN chown -R --from=root docker /usr/local/root-cern && \
+    chown -R --from=root docker /home/docker && \
+    chown -R --from=root docker /home/docker/.mg5
 
-ENV USER docker
+ENV USER=docker
 USER docker
 ENV PYTHONPATH=/usr/local/venv/lib:$PYTHONPATH
 ENV LD_LIBRARY_PATH=/usr/local/venv/lib:$LD_LIBRARY_PATH
