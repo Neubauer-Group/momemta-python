@@ -1,14 +1,24 @@
 ARG BUILDER_IMAGE=scailfin/madgraph5-amc-nlo-centos:mg5_amc3.1.1
 FROM ${BUILDER_IMAGE} as builder
 
-COPY --from=neubauergroup/centos-root-base:6.24.00 /usr/local/root-cern /usr/local/root-cern
-
 USER root
-WORKDIR /usr/local
+WORKDIR /
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# COPY ROOT out of neubauergroup/centos-root-base:6.24.00
+ARG ROOT_IMAGE=neubauergroup/centos-root-base:6.24.00
+COPY --from="${ROOT_IMAGE}" /usr/local/root-cern /usr/local/root-cern
+COPY --from="${ROOT_IMAGE}" /tmp/packages.txt /tmp/packages.txt
+COPY --from="${ROOT_IMAGE}" /tmp/requirements.txt /tmp/requirements.txt
+ENV PYTHONPATH=/usr/local/root-cern/lib:$PYTHONPATH
+ENV LD_LIBRARY_PATH=/usr/local/root-cern/lib:$LD_LIBRARY_PATH
+ENV ROOTSYS=/usr/local/root-cern
+ENV PATH="${PATH}:${ROOTSYS}/bin"
+
 RUN yum update -y && \
+    yum install -y epel-release && \
+    yum install -y $(cat /tmp/packages.txt) && \
     yum install -y \
       centos-release-scl \
       vim \
@@ -19,7 +29,10 @@ RUN yum update -y && \
       wget && \
     yum install -y devtoolset-8 && \
     yum clean all && \
-    yum autoremove -y
+    yum autoremove -y && \
+    python -m pip --no-cache-dir install --upgrade pip setuptools wheel && \
+    python -m pip --no-cache-dir install --requirement /tmp/requirements.txt && \
+    python -m pip list
 
 # Install BOOST
 # c.f. https://www.boost.org/doc/libs/1_76_0/more/getting_started/unix-variants.html

@@ -18,6 +18,13 @@ debug:
 	--build-arg MOMEMTA_VERSION=v1.0.1 \
 	-t neubauergroup/momemta-python:debug-local
 
+debug-centos:
+	docker build . \
+	-f docker/centos/Dockerfile \
+	--build-arg LHAPDF_VERSION=6.2.3 \
+	--build-arg MOMEMTA_VERSION=v1.0.1 \
+	-t neubauergroup/momemta-python-centos:debug-local
+
 test:
 	docker run \
 		--rm \
