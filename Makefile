@@ -21,7 +21,6 @@ debug:
 debug-centos:
 	docker build . \
 	-f docker/centos/Dockerfile \
-	--build-arg ROOT_IMAGE=neubauergroup/centos-root-base:6.24.00 \
 	--build-arg MOMEMTA_VERSION=v1.0.1 \
 	-t neubauergroup/momemta-python-centos:debug-local
 

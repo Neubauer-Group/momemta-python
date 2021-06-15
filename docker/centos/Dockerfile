@@ -1,16 +1,17 @@
 ARG BUILDER_IMAGE=scailfin/madgraph5-amc-nlo-centos:mg5_amc3.1.1
 FROM ${BUILDER_IMAGE} as builder
 
+FROM neubauergroup/centos-root-base:6.24.00 as root_cern_image
+FROM builder
+
 USER root
 WORKDIR /
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# COPY ROOT out of neubauergroup/centos-root-base:6.24.00
-ARG ROOT_IMAGE=neubauergroup/centos-root-base:6.24.00
-COPY --from="${ROOT_IMAGE}" /usr/local/root-cern /usr/local/root-cern
-COPY --from="${ROOT_IMAGE}" /tmp/packages.txt /tmp/packages.txt
-COPY --from="${ROOT_IMAGE}" /tmp/requirements.txt /tmp/requirements.txt
+COPY --from=root_cern_image /usr/local/root-cern /usr/local/root-cern
+COPY --from=root_cern_image /tmp/packages.txt /tmp/packages.txt
+COPY --from=root_cern_image /tmp/requirements.txt /tmp/requirements.txt
 ENV PYTHONPATH=/usr/local/root-cern/lib:$PYTHONPATH
 ENV LD_LIBRARY_PATH=/usr/local/root-cern/lib:$LD_LIBRARY_PATH
 ENV ROOTSYS=/usr/local/root-cern
