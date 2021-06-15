@@ -20,14 +20,12 @@ RUN yum update -y && \
     yum install -y epel-release && \
     yum install -y $(cat /tmp/packages.txt) && \
     yum install -y \
-      centos-release-scl \
       vim \
       zlib \
       zlib-devel \
       bzip2-devel \
       bash-completion \
       wget && \
-    yum install -y devtoolset-8 && \
     yum clean all && \
     yum autoremove -y && \
     python -m pip --no-cache-dir install --upgrade pip setuptools wheel && \
@@ -69,8 +67,7 @@ ENV HOME /home/docker
 WORKDIR ${HOME}/data
 RUN chown -R --from=root docker /usr/local/root-cern && \
     chown -R --from=root docker /home/docker && \
-    chown -R --from=root docker /home/docker/.mg5 && \
-    printf "\nsource scl_source enable devtoolset-8\n" >> $HOME/.bash_profile
+    chown -R --from=root docker /home/docker/.mg5
 
 ENV USER=docker
 USER docker
