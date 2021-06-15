@@ -15,6 +15,7 @@ ENV LD_LIBRARY_PATH=/usr/local/root-cern/lib:$LD_LIBRARY_PATH
 ENV ROOTSYS=/usr/local/root-cern
 ENV PATH="${PATH}:${ROOTSYS}/bin"
 
+# hadolint ignore=SC2046
 RUN yum update -y && \
     yum install -y epel-release && \
     yum install -y $(cat /tmp/packages.txt) && \
