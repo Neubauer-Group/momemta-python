@@ -1,5 +1,7 @@
-ARG BUILDER_IMAGE=neubauergroup/centos-root-base:6.24.00
+ARG BUILDER_IMAGE=scailfin/madgraph5-amc-nlo-centos:mg5_amc3.1.1
 FROM ${BUILDER_IMAGE} as builder
+
+COPY --from=neubauergroup/centos-root-base:6.24.00 /usr/local/root-cern /usr/local/root-cern
 
 USER root
 WORKDIR /usr/local
