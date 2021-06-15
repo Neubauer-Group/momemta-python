@@ -79,6 +79,11 @@ RUN mkdir -p /code && \
     cmake --build build --target install && \
     rm -rf /code
 
+RUN cd /usr/local/venv/MG5_aMC/PLUGIN/ && \
+    git clone --depth 1 https://github.com/MoMEMta/MoMEMta-MaGMEE.git \
+    --banch v1.0.0 \
+    --single-branch
+
 ENV HOME /home/docker
 WORKDIR ${HOME}/data
 RUN chown -R --from=root docker /usr/local/root-cern && \
