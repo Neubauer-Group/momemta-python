@@ -79,23 +79,23 @@ RUN mkdir -p /code && \
     cmake --build build --target install && \
     rm -rf /code
 
-# Create user "docker"
-RUN useradd --shell /bin/bash -m docker && \
-   cp /root/.bashrc /home/docker/ && \
-   mkdir /home/docker/data && \
-   chown -R --from=root docker /home/docker && \
-   chown -R --from=root docker /usr && \
-   chown -R --from=root docker /usr/local
+# # Create user "docker"
+# RUN useradd --shell /bin/bash -m docker && \
+#    cp /root/.bashrc /home/docker/ && \
+#    mkdir /home/docker/data && \
+#    chown -R --from=root docker /home/docker && \
+#    chown -R --from=root docker /usr && \
+#    chown -R --from=root docker /usr/local
 
-ENV HOME /home/docker
-WORKDIR ${HOME}/data
-# hadolint ignore=SC2016,SC1091
-RUN cp /root/.bash_profile ${HOME}/.bash_profile && \
-    cp /root/.bashrc ${HOME}/.bashrc && \
-    echo "" >> ${HOME}/.bashrc && \
-    echo 'export PATH=${HOME}/.local/bin:$PATH' >> ${HOME}/.bashrc
+# ENV HOME /home/docker
+# WORKDIR ${HOME}/data
+# # hadolint ignore=SC2016,SC1091
+# RUN cp /root/.bash_profile ${HOME}/.bash_profile && \
+#     cp /root/.bashrc ${HOME}/.bashrc && \
+#     echo "" >> ${HOME}/.bashrc && \
+#     echo 'export PATH=${HOME}/.local/bin:$PATH' >> ${HOME}/.bashrc
 
-ENV USER docker
+ENV USER=docker
 USER docker
 ENV PYTHONPATH=/usr/local/venv/lib:$PYTHONPATH
 ENV LD_LIBRARY_PATH=/usr/local/venv/lib:$LD_LIBRARY_PATH
