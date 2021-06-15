@@ -53,24 +53,6 @@ RUN mkdir -p /code && \
     cd / && \
     rm -rf /code
 
-# Install LHAPDF
-ARG LHAPDF_VERSION=6.2.3
-# hadolint ignore=SC2155,SC1091
-RUN mkdir -p /code && \
-    cd /code && \
-    wget https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
-    tar xvfz LHAPDF-${LHAPDF_VERSION}.tar.gz && \
-    cd LHAPDF-${LHAPDF_VERSION} && \
-    source scl_source enable devtoolset-8 && \
-    ./configure --help && \
-    export CXX=$(command -v g++) && \
-    export PYTHON=$(command -v python3) && \
-    ./configure \
-      --prefix=/usr/local/venv && \
-    make -j$(($(nproc) - 1)) && \
-    make install && \
-    rm -rf /code
-
 # MOMEMTA CXX_STANDARD must match ROOT's
 # Currently using C++14
 ARG MOMEMTA_VERSION=v1.0.1
