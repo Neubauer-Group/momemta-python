@@ -88,7 +88,8 @@ ENV HOME /home/docker
 WORKDIR ${HOME}/data
 RUN chown -R --from=root docker /usr/local/root-cern && \
     chown -R --from=root docker /home/docker && \
-    chown -R --from=root docker /home/docker/.mg5
+    chown -R --from=root docker /home/docker/.mg5 && \
+    printf "\nsource scl_source enable devtoolset-8\n" >> $HOME/.bash_profile
 
 ENV USER=docker
 USER docker
