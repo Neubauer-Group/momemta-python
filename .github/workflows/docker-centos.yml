@@ -119,8 +119,8 @@ jobs:
           context: .
           file: docker/centos/Dockerfile
           tags: |
-            neubauergroup/momemta-python-centos:mg5_amc2.9.4
-            ghcr.io/${{ steps.prep.outputs.repo_name_lowercase }}:mg5_amc2.9.4
+            neubauergroup/momemta-python-centos:mg5_amc2.8.3.2
+            ghcr.io/${{ steps.prep.outputs.repo_name_lowercase }}:mg5_amc2.8.3.2
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
