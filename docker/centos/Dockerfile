@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE=scailfin/madgraph5-amc-nlo-centos:mg5_amc3.1.1
+ARG BUILDER_IMAGE=scailfin/madgraph5-amc-nlo-centos:mg5_amc2.9.4
 FROM neubauergroup/centos-root-base:6.24.00 as root_cern_image
 FROM ${BUILDER_IMAGE} as builder
 
