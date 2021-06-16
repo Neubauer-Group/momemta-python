@@ -36,6 +36,7 @@ RUN yum update -y && \
 # Currently using C++14
 ARG MOMEMTA_VERSION=v1.0.1
 # hadolint ignore=SC1091
+# hadolint ignore=SC2046
 RUN mkdir -p /code && \
     cd /code && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta.git \
