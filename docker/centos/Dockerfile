@@ -59,8 +59,8 @@ RUN mkdir -p /code && \
     cmake --build build --target install && \
     rm -rf /code && \
     cd $(python -c 'import madgraph; print(madgraph.MG5DIR)')/PLUGIN/ && \
-    git clone --depth 1 https://github.com/matthewfeickert/MoMEMta-MaGMEE.git \
-      --branch feat/apply-pyupgrade \
+    git clone --depth 1 https://github.com/MoMEMta/MoMEMta-MaGMEE.git \
+      --branch master \
       --single-branch
 
 ENV HOME /home/docker
