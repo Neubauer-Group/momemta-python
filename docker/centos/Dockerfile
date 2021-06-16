@@ -71,7 +71,8 @@ RUN chown -R --from=root docker /usr/local/root-cern && \
 
 ENV USER=docker
 USER docker
-ENV PYTHONPATH=/usr/local/venv/lib:$PYTHONPATH
+# Need to place MoMEMta-MaGMEE plugin on PYTHONPATH
+ENV PYTHONPATH="$(python -c 'import madgraph; print(madgraph.MG5DIR)')/PLUGIN/MoMEMta-MaGMEE:${PYTHONPATH}"
 ENV LD_LIBRARY_PATH=/usr/local/venv/lib:$LD_LIBRARY_PATH
 ENV PATH ${HOME}/.local/bin:$PATH
 
