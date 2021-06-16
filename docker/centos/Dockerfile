@@ -56,12 +56,11 @@ RUN mkdir -p /code && \
     cmake build -L && \
     cmake --build build -- -j$(($(nproc) - 1)) && \
     cmake --build build --target install && \
-    rm -rf /code
-
-RUN cd /usr/local/venv/MG5_aMC/PLUGIN/ && \
+    rm -rf /code && \
+    cd $(python -c 'import madgraph; print(madgraph.MG5DIR)')/PLUGIN/ && \
     git clone --depth 1 https://github.com/MoMEMta/MoMEMta-MaGMEE.git \
-    --branch v1.0.0 \
-    --single-branch
+      --branch v1.0.0 \
+      --single-branch
 
 ENV HOME /home/docker
 WORKDIR ${HOME}/data
