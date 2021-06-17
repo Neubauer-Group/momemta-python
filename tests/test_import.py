@@ -22,6 +22,12 @@ def test_import_fastjet():
     assert fastjet
 
 
+def test_import_momemta():
+    import momemta
+
+    assert momemta
+
+
 def test_import_ROOT():
     import ROOT
 
