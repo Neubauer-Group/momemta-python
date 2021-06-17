@@ -51,7 +51,7 @@ RUN mkdir -p /code && \
       -DCMAKE_CXX_STANDARD="${ROOT_CXX_STANDARD}" \
       -DPYTHON_BINDINGS=ON \
       -DPYTHON_MIN_VERSION=3 \
-      -DBoost_PYTHON_VERSION_TAG=3 \
+      -DBoost_PYTHON_VERSION_TAG=$(find /usr/local/venv/ -iname 'libboost_python*.so' | sed --regexp-extended 's/.*_python([0-9]+).*/\1/g') \
       -S MoMEMta \
       -B build && \
     cmake build -L && \
