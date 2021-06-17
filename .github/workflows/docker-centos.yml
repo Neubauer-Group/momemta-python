@@ -101,10 +101,19 @@ jobs:
           neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
           'ldd --version'
 
+      - name: Run pytest tests
+        # Need to run not below PWD to have non-root write with GHA
+        run: >-
+          docker run --rm
+          -v $PWD:$PWD
+          -w $PWD
+          neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
+          'python -m pip install pytest && \
+           pytest tests'
+
       - name: Run test program
         run: >-
           docker run --rm
-          --user root
           -v $PWD:$PWD
           -w $PWD
           neubauergroup/momemta-python-centos:sha-${GITHUB_SHA::8}
