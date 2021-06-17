@@ -63,17 +63,17 @@ RUN mkdir -p /code && \
       --branch master \
       --single-branch
 
-ENV HOME /home/docker
-WORKDIR ${HOME}/data
 RUN chown -R --from=root docker /usr/local/root-cern && \
     chown -R --from=root docker /home/docker && \
     chown -R --from=root docker /home/docker/.mg5
 
-ENV USER=docker
-USER docker
 # Need to place MoMEMta-MaGMEE plugin on PYTHONPATH
 # LD_LIBRARY_PATH and PATH already set in BUILDER_IMAGE
 ENV PYTHONPATH="/usr/local/venv/MG5_aMC/PLUGIN/MoMEMta-MaGMEE:${PYTHONPATH}"
+
+# Default user is root to avoid uid write permission problems with volumes
+ENV HOME /root
+WORKDIR ${HOME}/data
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
 CMD ["/bin/bash"]
