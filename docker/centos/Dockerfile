@@ -72,9 +72,8 @@ RUN chown -R --from=root docker /usr/local/root-cern && \
 ENV USER=docker
 USER docker
 # Need to place MoMEMta-MaGMEE plugin on PYTHONPATH
+# LD_LIBRARY_PATH and PATH already set in BUILDER_IMAGE
 ENV PYTHONPATH="/usr/local/venv/MG5_aMC/PLUGIN/MoMEMta-MaGMEE:${PYTHONPATH}"
-ENV LD_LIBRARY_PATH=/usr/local/venv/lib:$LD_LIBRARY_PATH
-ENV PATH ${HOME}/.local/bin:$PATH
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
 CMD ["/bin/bash"]
