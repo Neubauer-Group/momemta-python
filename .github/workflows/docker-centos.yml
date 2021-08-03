@@ -32,12 +32,13 @@ jobs:
           VERSION=latest
           REPO_NAME=${{github.repository}}
           REPO_NAME_LOWERCASE="${REPO_NAME,,}"
+          MOMEMTA_VERSION=1.0.1
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
           elif [[ $GITHUB_REF == refs/pull/* ]]; then
             VERSION=pr-${{ github.event.number }}
           fi
-          TAGS="${DOCKER_IMAGE}:${VERSION}"
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${MOMEMTA_VERSION}"
           TAGS="$TAGS,${DOCKER_IMAGE}:latest,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
           # Releases also have GITHUB_REFs that are tags, so reuse VERSION
           if [ "${{ github.event_name }}" = "release" ]; then
@@ -47,6 +48,7 @@ jobs:
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           echo ::set-output name=repo_name_lowercase::"${REPO_NAME_LOWERCASE}"
+          echo ::set-output name=momemta_version::"${MOMEMTA_VERSION}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -129,7 +131,9 @@ jobs:
           file: docker/centos/Dockerfile
           tags: |
             neubauergroup/momemta-python-centos:latest
+            neubauergroup/momemta-python-centos:${{ steps.prep.outputs.momemta_version }}
             ghcr.io/${{ steps.prep.outputs.repo_name_lowercase }}:latest
+            ghcr.io/${{ steps.prep.outputs.repo_name_lowercase }}:${{ steps.prep.outputs.momemta_version }}
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
